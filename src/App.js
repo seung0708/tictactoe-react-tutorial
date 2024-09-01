@@ -7,7 +7,7 @@ export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
-    if(squares[i]) {
+    if(squares[i] || calculateWinner(squares)) {
       return;
     }
     //creating a copy of squares
@@ -23,8 +23,18 @@ export default function Board() {
     setIsNext(!xIsNext)
   }
 
+  //to let the players know when the game is over
+  const winner = calculateWinner(squares); 
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = "Next play: " + xIsNext ? "X" : "O"
+  }
+
   return (
     <main>
+       <div className="status">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -44,6 +54,26 @@ export default function Board() {
   )
 }
 
-function calculateWinner(squares) {
-  
+//helper function to tell who the winner is
+function calculateWinner(squares) { 
+  //takes an array of 9 squares
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
+  for (let i = 0; i < lines.length; i++) {
+    const [a,b,c] = lines[i];
+    //checks to see if all 3 squares are the same
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a]
+    }
+  }
+  //or null: I guess this would be a tie
+  return null;
 }
