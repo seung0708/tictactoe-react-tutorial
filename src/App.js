@@ -1,16 +1,26 @@
 import {useState} from 'react';
 import './App.css';
 import Square from './Square';
-//
+
 export default function Board() {
-  const [squares, setSquares] = useState(Array(9).fill(null))
+  const [xIsNext, setIsNext] = useState(true);
+  const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
+    if(squares[i]) {
+      return;
+    }
     //creating a copy of squares
     const nextSquares = squares.slice();
-    nextSquares[i] = 'X'
+    if(xIsNext) {
+      nextSquares[i] = 'X'
+    } else {
+      nextSquares[i] = 'O'
+    }
+
     //calling the setSquares function lets React knows the state of the component has changed
     setSquares(nextSquares)
+    setIsNext(!xIsNext)
   }
 
   return (
@@ -34,3 +44,6 @@ export default function Board() {
   )
 }
 
+function calculateWinner(squares) {
+  
+}
