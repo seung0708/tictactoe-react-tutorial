@@ -2,6 +2,11 @@ import {useState} from 'react';
 import './App.css';
 import Board from './components/Board'
 
+/*
+  Game
+  
+*/
+
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
@@ -32,14 +37,20 @@ export default function Game() {
     );
   });
 
+  function handleReset() {
+    window.location.reload()
+}
+
+
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <div className="game-info">
+          <ol>{moves}</ol>
+        </div>
       </div>
-      <div className="game-info">
-        <ol>{moves}</ol>
-      </div>
+      <button className='reset' onClick={handleReset}>RESET</button>
     </div>
   );
 }

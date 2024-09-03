@@ -1,7 +1,6 @@
 import React from "react";
 import Square from './Square';
 
-//passing in xINext, squares, onPlay from Game component
 export default function Board({xIsNext, squares, onPlay}) {
     
     function handleClick(i) {

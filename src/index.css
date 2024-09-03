@@ -26,3 +26,7 @@ body {
   content: '';
   display: table;
 }
+
+.game-board {
+  display: flex;
+}
